@@ -1,0 +1,31 @@
+{
+  "name": "galton-page",
+  "version": "1.0.0",
+  "description": "Galton demo page",
+  "main": "./src/app.js",
+  "scripts": {
+    "test": "test",
+    "start": "webpack"
+  },
+  "devDependencies": {
+    "css-loader": "^0.23.1",
+    "style-loader": "^0.13.1",
+    "webpack": "^1.13.1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/urbica/galton-page.git"
+  },
+  "author": "Andrey Karmatsky",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/urbica/galton-page/issues"
+  },
+  "homepage": "https://github.com/urbica/galton-page#readme",
+  "dependencies": {
+    "json-loader": "^0.5.4",
+    "mapbox-gl": "^0.21.0",
+    "transform-loader": "^0.2.3",
+    "webworkify-webpack": "^1.1.5"
+  }
+}

@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset='utf-8' />
+    <title></title>
+    <meta name='viewport' content='initial-scale=1,maximum-scale=1,user-scalable=no' />
+    <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,300' rel='stylesheet' type='text/css'>
+    <script src='https://api.tiles.mapbox.com/mapbox-gl-js/v0.21.0/mapbox-gl.js'></script> 
+    <link href='https://api.tiles.mapbox.com/mapbox-gl-js/v0.21.0/mapbox-gl.css' rel='stylesheet' />
+<!--    <link href='minutes.css' rel='stylesheet' /> -->
+</head>
+<body>
+<div id='progress'></div>
+<div id='map-mapbox'></div>
+<div id='logo'><a href='http://urbica.co/'><img src='urbica_logo.svg' width='126' height='24' border='0'/></a></div>
+<div id='panel'>
+  <div id='panel-title'>
+    <div id='languages'>
+      <div id='lang-ru' class='lang'>По-русски</div>
+      <div id='lang-en' class='lang'>English</div>
+    </div>
+    <div id='title'>Galton</div>
+  </div>
+  <div id='menu'>
+  </div>
+  <div id='content'>
+    <div id = 'content-about'>
+      <div class='lang-ru'>
+        <p><a href="https://ru.wikipedia.org/wiki/%D0%93%D0%B0%D0%BB%D1%8C%D1%82%D0%BE%D0%BD,_%D0%A4%D1%80%D1%8D%D0%BD%D1%81%D0%B8%D1%81">Фрэнсис Гальтон</a> — английский исследователь, географ, антрополог и психолог, первым предложил использовать изохроны — изолинии соединяющие места одновременности того или иного явления.</p>
+        <p>Изохроны используются в метрологии, транспортном планировании, проектировании и застройке территорий, геомаркетинге и во многих других сферах.</p>
+        <p>Кликнув на карте или перетаскивая точку, можно получить расчёт изохрон «на лету».</p>
+      </div>
+      <div class='lang-en'>
+        <p><a href="https://en.wikipedia.org/wiki/Francis_Galton">Francis Galton</a> was an English scholar, geographer, anthropologist, and psychologist.  In fact, he was the first to suggest using isochrones - lines on a map that connect points relating to the same dimension of time of a given phenomenon.</p>
+        <p>Isochrones are used in meteorology, transportation planning, building design and development, geomarketing, and various other fields.</p>
+        <p>By clicking on the map or dragging a point, you can generate isochrones on the fly.</p>
+      </div>
+    </div>
+    <div id = 'content-examples'>
+      <div class='lang-ru'><p>Примеры</p></div>
+      <div class='lang-en'><p>Examples</p></div>
+        <div id = 'maps-menu'>
+        </div>
+        <div><input type='checkbox' id='dataCheckbox'>&nbsp;<span class='lang-ru'>Подсчёт числа кафе зоне доступности</span><span class='lang-en'>Calculate data within zones</span></div>
+        <div id='graph'></div>
+
+    </div>
+    <div id = 'content-more'>
+      <div class='lang-ru'>
+        <p>Мы разрабатываем технологию расчёта изохрон пешей и транспортной доступности на базе открытых технологий <a href="http://openstreetmap.org">OpenStreetMap</a> и <a href="http://project-osrm.org">OSRM</a></p>
+        <p>Код проекта опубликован здесь: <a href='https://github.com/urbica/galton/'>github.com/urbica/galton</a>.</p>
+        <p><a href='http://urbica.co/'><b>Urbica Design</b></a> занимается анализом и визуализацией пространственных данных. Если у вас есть идея, как задействовать наш опыт и технологии в вашем проекте — напишите нам письмо <b>hello@urbica.co</b></p>
+      </div>
+      <div class='lang-en'>
+        <p>We develop tools to calculate isochrones that show how far you can travel on a transportation network based on open source software OpenStreetMap and OSRM.</p>
+        <p>The project’s source code is available on <a href='https://github.com/urbica/galton/'>github.com/urbica/galton</a></p>
+        <p><a href="http://urbica.co/">Urbica Design</a> conducts analysis and visualization of spatial data.  If you have an idea, or want to realize your proejct with our software and know-how, feel free to write us at hello@urbica.com</p>
+      </div>
+    </div>
+  </div>
+</div>
+<div id='modes'>
+  <div class='mode-selected' id='mode-foot'><span class='lang-ru'>Пешком</span><span class='lang-en'>Walking</span></div>
+  <div class='mode' id='mode-car'><span class='lang-ru'>На автомобиле</span><span class='lang-en'>Driving</span></div>
+</div>
+<div id='legend'>
+  <div class='legend-caption'><span class='lang-ru'>Достижимо&nbsp;за&nbsp;</span><span class='lang-en'>Reachable&nbsp;at&nbsp;</span></div>
+  <div id='m10' class='legend-item'>10</div>
+  <div id='m20' class='legend-item'>20</div>
+  <div id='m30' class='legend-item'>30</div>
+  <div class='legend-caption'><span class='lang-ru'>&nbsp;минут</span><span class='lang-en'>&nbsp;minutes</span></div>
+</div>
+
+<!-- <script src='js/minutes.js'></script> -->
+    <script src="bundle.js"></script>
+</body>
+</html>
