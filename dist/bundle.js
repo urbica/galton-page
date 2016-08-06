@@ -69,6 +69,14 @@
 	var dlang = navigator.language || navigator.userLanguage;
 	if(dlang=="ru" || dlang=="ru-RU") lang = "ru";
 
+	var cities = [
+	  { id: "moscow", center: [37.617015, 55.750931], ru: "Москва", en: "Moscow" },
+	  { id: "berlin", center: [13.385706,52.516879], ru: "Берлин", en: "Berlin" },
+	  { id: "amsterdam", center: [4.893446,52.372732], ru: "Амстердам", en: "Amsterdam" },
+	  { id: "london", center: [4.893446,52.372732], ru: "Лондон", en: "London" },
+	  { id: "paris", center: [4.893446,52.372732], ru: "Париж", en: "Paris" }
+	];
+
 	pages = [
 	  { id: 'about', label: '<span class="lang-ru">О технологии</span><span class="lang-en">About</span>'},
 	  { id: 'examples', label: '<span class="lang-ru">Примеры</span><span class="lang-en">Examples</span>'},
@@ -89,7 +97,8 @@
 
 	//blocks
 	var menu = d3.select("#menu"),
-	    mapsMenu = d3.select("#maps-menu"),
+	    citiesMenu = d3.select("#cities"),
+	    selectedCity = d3.select("#selectedCity"),
 	    modeFoot = d3.select("#mode-foot"),
 	    modeCar = d3.select("#mode-car"),
 	    progress = d3.select("#progress"),
@@ -122,6 +131,21 @@
 	      }
 	    }
 
+	    var citiesMenuShown = false;
+
+	    selectedCity.on('click', function() {
+	      citiesMenu.style("display", "block");
+	      setTimeout(function() { citiesMenuShown = true; }, 100);
+	    });
+
+	    window.onclick = function() {
+	      console.log(citiesMenuShown);
+	      if(citiesMenuShown) {
+	        citiesMenuShown = false;
+	        citiesMenu.style("display", "none");
+	      }
+	    };
+
 
 
 	//building pages menu
@@ -145,8 +169,32 @@
 
 	//  d3.selectAll('.lang-en').style('display', 'block');
 	//  d3.selectAll('.lang-ru').style('display', 'none');
-
 	}
+
+	//building cities menu
+	cities.forEach(function(c) {
+	  var cItem = citiesMenu.append("div").attr("class", "city");
+	  cItem.append("span").attr("class", "lang-en").text(c.en);
+	  cItem.append("span").attr("class", "lang-ru").text(c.ru);
+	  cItem.on('click', function() {
+	    setCity(c.id);
+	  })
+	});
+
+	function setCity(id) {
+	  selectedCity.text('');
+	  cities.forEach(function(c){
+	    if(c.id == id) {
+	      selectedCity.append('span').attr("class", "lang-en").text(c.en);
+	      selectedCity.append('span').attr("class", "lang-ru").text(c.ru);
+	      map.setCenter(c.center);
+	      getGalton(c.center, currentMode);
+	    }
+	  });
+	  setLang(lang);
+	}
+
+
 
 
 	var start = [37.617015, 55.750931],
@@ -207,6 +255,8 @@
 	});
 
 	getPage(currentPage);
+
+	setCity('moscow');
 
 	//start
 	setLang(lang);
@@ -385,7 +435,8 @@
 	  });
 
 	  //start from start
-	  getGalton(start, currentMode);
+	  //getGalton(start, currentMode);
+	  setCity('moscow');
 
 	});
 
@@ -559,7 +610,7 @@
 
 
 	// module
-	exports.push([module.id, "* { font-family: 'Open Sans', sans-serif; font-weight: 300; }\na, a:visited { color: ##0099EE; text-decoration: none; }\na:hover { color: #EE3333; }\n#map-mapbox, #map-ymaps, #map-leaflet { position: absolute; top: 0; bottom: 0; left: 0; width: 100%; }\n#panel { padding: 18px; background: #fff; box-shadow: 0px 1px 3px 3px rgba(0,0,0,0.2); position: absolute; top: 12px; left: 12px; width: 360px; max-height: 450px; overflow-y: auto; z-index: 3030; }\n#logo { opacity: 0.7; position: absolute; bottom: 12px; left: 12px; width: 360px; max-height: 450px; overflow-y: auto; z-index: 3030; }\n#logo:hover { opacity: 1; }\n#title { font-size: 36px; margin-bottom: 12px; }\n#panel-title {  }\n.lang-ru, .lang-en { display: none; }\n.lang, .lang-selected { cursor: pointer; display: inline-block; font-size: 12px; }\n#languages { float: right; text-align: right; }\n#modes { padding: 12px; background: #fff; box-shadow: 0px 1px 3px 3px rgba(0,0,0,0.2); position: absolute; top: 12px; right: 12px; z-index: 3030; }\n#content { font-size: 13px; line-height: 20px; border-top: 0.5px dotted #ccc; }\n#menu { margin-bottom: 12px; }\n#legend { font-size: 13px; z-index: 101010; padding: 10px; position: absolute; text-align: center; color: #222; bottom: 20px; left: 50%; margin-left: -120px; width: 250px; background: rgba(255,255,255,0.75); }\n.legend-caption { display: inline-block; }\n.legend-item { display: inline-block; width: 30px; text-align: center; font-size: 12px; }\n#m10 { background: rgba(0, 153, 255, 0.8); }\n#m20 { background: rgba(0, 153, 255, 0.5); }\n#m30 { background: rgba(0, 153, 255, 0.2); }\n.menu-item, .menu-item-selected, .mode, .mode-selected { display: inline-block; font-weight: 400; cursor: pointer; margin-right: 12px; }\n.menu-item, .maps-menu-item, .mode { color: #0099EE; cursor: pointer; }\n.maps-menu-item, .maps-menu-item-selected { line-height: 24px; }\n.menu-item-selected, .maps-menu-item-selected, .mode-selected { cursor: pointer; color: #555; }\n.bar-lines { line-height: 18px; display: flex; height: 18px; margin-bottom: 2px; vertical-align: middle; align-items: center; }\n.bar { display: inline; height: 18px; text-align: center; color: #fff;  }\n.bar:hover { }\n.bar-captions { line-height: 12px; display: flex; height: 12px; margin-bottom: 2px; vertical-align: middle; align-items: center; }\n.bar-caption { text-align: right; font-size: 12px; font-weight: 400; display: inline; line-height: 12px; height: 12px; }\n\n#progress { position: absolute; top: 0px; left: 0px; width: 100%; z-index: 2344444434; display: none; height: 12px;\n  opacity: 0.8;\n  background-image: -webkit-linear-gradient(left, #0099EE 0%, #B5E5FF 25%, #B5E5FF 50%, #B5E5FF 75%, #0099EE 100%);\n  animation: kaleidoscope 12s ease infinite;\n}\n\n@keyframes namedcolors {\n\t100% {background-color: white;}\n}\n\n@-webkit-keyframes kaleidoscope {\n0% {\nbackground-position: 0 0;\n}\n25% {\nbackground-position: 25em 0;\n}\n50% {\nbackground-position: 50em 0;\n}\n75% {\nbackground-position: 75em 0;\n}\n100% {\nbackground-position: 99em 0;\n}\n}\n", ""]);
+	exports.push([module.id, "* { font-family: 'Open Sans', sans-serif; font-weight: 300; }\na, a:visited { color: ##0099EE; text-decoration: none; }\na:hover { color: #EE3333; }\n#map-mapbox, #map-ymaps, #map-leaflet { position: absolute; top: 0; bottom: 0; left: 0; width: 100%; }\n#panel { padding: 18px; background: #fff; box-shadow: 0px 1px 3px 3px rgba(0,0,0,0.2); position: absolute; top: 12px; left: 12px; width: 300px; max-height: 480px; overflow-y: auto; z-index: 3030; }\n#logo { opacity: 0.7; position: absolute; bottom: 12px; left: 12px; width: 360px; max-height: 450px; overflow-y: auto; z-index: 3030; }\n#logo:hover { opacity: 1; }\n#byUrbica { font-size: 13px; display: block; line-height: 15px; margin-top: 6px; }\n#byUrbica a { color: black;  }\n#byUrbica a:hover { color: red;  }\n#title { font-size: 36px; margin-bottom: 12px; }\n#panel-title {  }\n.lang-ru, .lang-en { display: none; }\n.lang, .lang-selected { cursor: pointer; display: inline-block; font-size: 12px; }\n#languages { float: right; text-align: right; }\n#selectedCity { float: right; text-align: right; cursor: pointer; }\n#selectedCity:hover { color: red; }\n\n#cities { display: none; position: absolute; top: 50px; left: 230px; padding: 12px; background: #fff; box-shadow: 0px 1px 3px 3px rgba(0,0,0,0.2); z-index: 3030; }\n#modes { padding: 12px; background: #fff; box-shadow: 0px 1px 3px 3px rgba(0,0,0,0.2); position: absolute; top: 12px; right: 12px; z-index: 3030; }\n#content { font-size: 13px; line-height: 20px; border-top: 0.5px dotted #ccc; }\n.city:hover { color: red; cursor: pointer; }\n#menu { margin-bottom: 12px; }\n#legend { font-size: 13px; z-index: 101010; padding: 10px; position: absolute; text-align: center; color: #222; bottom: 20px; left: 50%; margin-left: -120px; width: 250px; background: rgba(255,255,255,0.75); }\n.legend-caption { display: inline-block; }\n.legend-item { display: inline-block; width: 30px; text-align: center; font-size: 12px; }\n#m10 { background: rgba(0, 153, 255, 0.8); }\n#m20 { background: rgba(0, 153, 255, 0.5); }\n#m30 { background: rgba(0, 153, 255, 0.2); }\n.menu-item, .menu-item-selected, .mode, .mode-selected { display: inline-block; font-weight: 400; cursor: pointer; margin-right: 12px; }\n.menu-item, .maps-menu-item, .mode { color: #0099EE; cursor: pointer; }\n.maps-menu-item, .maps-menu-item-selected { line-height: 24px; }\n.menu-item-selected, .maps-menu-item-selected, .mode-selected { cursor: pointer; color: #555; }\n.bar-lines { line-height: 18px; display: flex; height: 18px; margin-bottom: 2px; vertical-align: middle; align-items: center; }\n.bar { display: inline; height: 18px; text-align: center; color: #fff;  }\n.bar:hover { }\n.bar-captions { line-height: 12px; display: flex; height: 12px; margin-bottom: 2px; vertical-align: middle; align-items: center; }\n.bar-caption { text-align: right; font-size: 12px; font-weight: 400; display: inline; line-height: 12px; height: 12px; }\n\n#progress { position: absolute; top: 0px; left: 0px; width: 100%; z-index: 2344444434; display: none; height: 12px;\n  opacity: 0.8;\n  background-image: -webkit-linear-gradient(left, #0099EE 0%, #B5E5FF 25%, #B5E5FF 50%, #B5E5FF 75%, #0099EE 100%);\n  animation: kaleidoscope 12s ease infinite;\n}\n\n@keyframes namedcolors {\n\t100% {background-color: white;}\n}\n\n@-webkit-keyframes kaleidoscope {\n0% {\nbackground-position: 0 0;\n}\n25% {\nbackground-position: 25em 0;\n}\n50% {\nbackground-position: 50em 0;\n}\n75% {\nbackground-position: 75em 0;\n}\n100% {\nbackground-position: 99em 0;\n}\n}\n", ""]);
 
 	// exports
 

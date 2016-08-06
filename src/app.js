@@ -23,6 +23,14 @@ var lang = "en";
 var dlang = navigator.language || navigator.userLanguage;
 if(dlang=="ru" || dlang=="ru-RU") lang = "ru";
 
+var cities = [
+  { id: "moscow", center: [37.617015, 55.750931], ru: "Москва", en: "Moscow" },
+  { id: "berlin", center: [13.385706,52.516879], ru: "Берлин", en: "Berlin" },
+  { id: "amsterdam", center: [4.893446,52.372732], ru: "Амстердам", en: "Amsterdam" },
+  { id: "london", center: [4.893446,52.372732], ru: "Лондон", en: "London" },
+  { id: "paris", center: [4.893446,52.372732], ru: "Париж", en: "Paris" }
+];
+
 pages = [
   { id: 'about', label: '<span class="lang-ru">О технологии</span><span class="lang-en">About</span>'},
   { id: 'examples', label: '<span class="lang-ru">Примеры</span><span class="lang-en">Examples</span>'},
@@ -43,7 +51,8 @@ var dataInside, dataOutside;
 
 //blocks
 var menu = d3.select("#menu"),
-    mapsMenu = d3.select("#maps-menu"),
+    citiesMenu = d3.select("#cities"),
+    selectedCity = d3.select("#selectedCity"),
     modeFoot = d3.select("#mode-foot"),
     modeCar = d3.select("#mode-car"),
     progress = d3.select("#progress"),
@@ -76,6 +85,21 @@ var menu = d3.select("#menu"),
       }
     }
 
+    var citiesMenuShown = false;
+
+    selectedCity.on('click', function() {
+      citiesMenu.style("display", "block");
+      setTimeout(function() { citiesMenuShown = true; }, 100);
+    });
+
+    window.onclick = function() {
+      console.log(citiesMenuShown);
+      if(citiesMenuShown) {
+        citiesMenuShown = false;
+        citiesMenu.style("display", "none");
+      }
+    };
+
 
 
 //building pages menu
@@ -99,8 +123,32 @@ function getPage(pageID) {
 
 //  d3.selectAll('.lang-en').style('display', 'block');
 //  d3.selectAll('.lang-ru').style('display', 'none');
-
 }
+
+//building cities menu
+cities.forEach(function(c) {
+  var cItem = citiesMenu.append("div").attr("class", "city");
+  cItem.append("span").attr("class", "lang-en").text(c.en);
+  cItem.append("span").attr("class", "lang-ru").text(c.ru);
+  cItem.on('click', function() {
+    setCity(c.id);
+  })
+});
+
+function setCity(id) {
+  selectedCity.text('');
+  cities.forEach(function(c){
+    if(c.id == id) {
+      selectedCity.append('span').attr("class", "lang-en").text(c.en);
+      selectedCity.append('span').attr("class", "lang-ru").text(c.ru);
+      map.setCenter(c.center);
+      getGalton(c.center, currentMode);
+    }
+  });
+  setLang(lang);
+}
+
+
 
 
 var start = [37.617015, 55.750931],
@@ -161,6 +209,8 @@ outsideSource = new mapboxgl.GeoJSONSource({
 });
 
 getPage(currentPage);
+
+setCity('moscow');
 
 //start
 setLang(lang);
@@ -339,7 +389,8 @@ map.on('load', function () {
   });
 
   //start from start
-  getGalton(start, currentMode);
+  //getGalton(start, currentMode);
+  setCity('moscow');
 
 });
 
