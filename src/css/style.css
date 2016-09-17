@@ -2,26 +2,28 @@
 a, a:visited { color: ##0099EE; text-decoration: none; }
 a:hover { color: #EE3333; }
 #map-mapbox, #map-ymaps, #map-leaflet { position: absolute; top: 0; bottom: 0; left: 0; width: 100%; }
-#panel { padding: 18px; background: #fff; box-shadow: 0px 1px 3px 3px rgba(0,0,0,0.2); position: absolute; top: 12px; left: 12px; width: 300px; max-height: 480px; overflow-y: auto; z-index: 3030; }
+#panel { padding: 12px; font-size: 13px; position: absolute; background: #fff; box-shadow: 0px 1px 3px 3px rgba(0,0,0,0.2); top: 12px; left: 12px; width: 220px;  overflow-y: auto; z-index: 900; }
 #logo { opacity: 0.7; position: absolute; bottom: 12px; left: 12px; width: 360px; max-height: 450px; overflow-y: auto; z-index: 3030; }
 #logo:hover { opacity: 1; }
-#byUrbica { font-size: 13px; display: block; line-height: 15px; margin-top: 6px; }
+#byUrbica { font-size: 13px; display: block; line-height: 15px; margin-top: 0px; }
 #byUrbica a { color: black;  }
 #byUrbica a:hover { color: red;  }
-#title { font-size: 36px; margin-bottom: 12px; }
+#title { color: #484848; font-size: 36px; margin-bottom: 8px; }
+
 #panel-title {  }
+
 .lang-ru, .lang-en { display: none; }
 .lang, .lang-selected { cursor: pointer; display: inline-block; font-size: 12px; }
 #languages { float: right; text-align: right; }
-#selectedCity { float: right; text-align: right; cursor: pointer; }
-#selectedCity:hover { color: red; }
+#startBtnLine { text-align: center; }
+#startBtn { max-width: 100; display: inline-block; padding: 12px 18px; font-size: 18px; background: #09e; color: #fff; box-shadow: 0px 0px 2px 2px rgba(0,0,0,0.05); cursor: pointer; }
+#startBtn:hover { background: #0af; }
+#modes { display: none; padding: 12px; background: #fff; box-shadow: 0px 1px 3px 3px rgba(0,0,0,0.2); position: absolute; top: 12px; right: 12px; z-index: 3030; }
+#content {  }
 
-#cities { display: none; position: absolute; top: 50px; left: 230px; padding: 12px; background: #fff; box-shadow: 0px 1px 3px 3px rgba(0,0,0,0.2); z-index: 3030; }
-#modes { padding: 12px; background: #fff; box-shadow: 0px 1px 3px 3px rgba(0,0,0,0.2); position: absolute; top: 12px; right: 12px; z-index: 3030; }
-#content { font-size: 13px; line-height: 20px; border-top: 0.5px dotted #ccc; }
 .city:hover { color: red; cursor: pointer; }
-#menu { margin-bottom: 12px; }
-#legend { font-size: 13px; z-index: 101010; padding: 10px; position: absolute; text-align: center; color: #222; bottom: 20px; left: 50%; margin-left: -120px; width: 250px; background: rgba(255,255,255,0.75); }
+#menu { margin-bottom: 4px; }
+#legend { font-size: 13px; z-index: 300; padding: 10px; position: absolute; text-align: center; color: #222; bottom: 20px; left: 50%; margin-left: -120px; width: 250px; background: rgba(255,255,255,0.75); }
 .legend-caption { display: inline-block; }
 .legend-item { display: inline-block; width: 30px; text-align: center; font-size: 12px; }
 #m10 { background: rgba(0, 153, 255, 0.8); }
@@ -31,13 +33,8 @@ a:hover { color: #EE3333; }
 .menu-item, .maps-menu-item, .mode { color: #0099EE; cursor: pointer; }
 .maps-menu-item, .maps-menu-item-selected { line-height: 24px; }
 .menu-item-selected, .maps-menu-item-selected, .mode-selected { cursor: pointer; color: #555; }
-.bar-lines { line-height: 18px; display: flex; height: 18px; margin-bottom: 2px; vertical-align: middle; align-items: center; }
-.bar { display: inline; height: 18px; text-align: center; color: #fff;  }
-.bar:hover { }
-.bar-captions { line-height: 12px; display: flex; height: 12px; margin-bottom: 2px; vertical-align: middle; align-items: center; }
-.bar-caption { text-align: right; font-size: 12px; font-weight: 400; display: inline; line-height: 12px; height: 12px; }
 
-#progress { position: absolute; top: 0px; left: 0px; width: 100%; z-index: 2344444434; display: none; height: 12px;
+#progress { position: absolute; top: 0px; left: 0px; width: 100%; z-index: 500; display: none; height: 12px;
   opacity: 0.8;
   background-image: -webkit-linear-gradient(left, #0099EE 0%, #B5E5FF 25%, #B5E5FF 50%, #B5E5FF 75%, #0099EE 100%);
   animation: kaleidoscope 12s ease infinite;
@@ -63,4 +60,15 @@ background-position: 75em 0;
 100% {
 background-position: 99em 0;
 }
+}
+
+#project-name-clickable { display: none; cursor: pointer;}
+#project-name { display: block; }
+
+
+@media screen and (max-width: 500px) {
+	#about { width: 100%; margin: 0; height: 100%; max-height: auto; left: 0; top: 0; right: 0; bottom: 0; }
+	#cities { right: 12px; top: 40px; left: normal; }
+	#legend { padding: 2px;  }
+	.legend-item { padding: 2px; font-size: 10px; width: 20px; }
 }
