@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset='utf-8' />
+    <title>Galton by Urbica</title>
+    <meta name='viewport' content='initial-scale=1,maximum-scale=1,user-scalable=no' />
+    <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,300' rel='stylesheet' type='text/css'>
+    <link rel="icon" type="image/png" href="favicon.png">
+    <link rel="icon" type="image/svg+xml" href="favicon.svg">
+    <script src="https://d3js.org/d3.v4.min.js"></script>
+    <script src='https://npmcdn.com/@turf/turf@3.5.1/turf.min.js'></script> 
+    <script src='https://api.tiles.mapbox.com/mapbox-gl-js/v0.23.0/mapbox-gl.js'></script> 
+    <link href='https://api.tiles.mapbox.com/mapbox-gl-js/v0.23.0/mapbox-gl.css' rel='stylesheet' />
+    
+    <link href='resources/galton.css' rel='stylesheet' />
+    <style type="text/css">
+    </style>
+</head>
+<body>
+<div id='intro'>
+  <div id='hello'>Meet Galton<br/><small><small>by Urbica</small></small></div>
+</div>
+<div id='progress'></div>
+<div id='stats'></div>
+<div id='mobile-btn'>G</div>
+<div id='location-btn'><div></div></div>
+<div id='map'></div>
+<div id='panel'>
+  <div id='panel-wrapper'>
+  <div id='panel-title'>
+    <div id='close-btn'></div>
+    <div id='title'>Galton</div>
+  </div>
+    <div id='menu'></div>
+    <div id='content'>
+     <div id='about'>
+      <div class='lang-en'>
+        <p><a href="https://en.wikipedia.org/wiki/Francis_Galton">Francis Galton</a> was an English scholar, geographer, anthropologist, and psychologist. In fact, he was the first to suggest using isochrones - lines on a map that connect points relating to the same dimension of time of a given phenomenon.</p>
+       <p>Basing on <a href="http://openstreetmap.org">OpenStreetMap</a> data and <a href="http://project-osrm.org">OSRM</a> engine <a href='http://urbica.co'>Urbica</a> developed «on the fly» isochrones technology. Galton's code is open and published at <a href='https://github.com/urbica/galton/'>GitHub</a>. Read more <a href='https://medium.com/@Urbica.co/hello-galton-e6e07a7164b7'>details in the blog</a>.</p>
+       <p>We'll be glad to talk about possible Galton integrations in the context of your project. Drop us a line <a href='mailto:hello@urbica.co'>hello@urbica.co</a></p>
+     </div>
+     <div class='lang-ru'>
+        <p><a href="https://ru.wikipedia.org/wiki/%D0%93%D0%B0%D0%BB%D1%8C%D1%82%D0%BE%D0%BD,_%D0%A4%D1%80%D1%8D%D0%BD%D1%81%D0%B8%D1%81">Фрэнсис Гальтон</a> — английский исследователь, географ, антрополог и психолог, первым предложил использовать изохроны — изолинии, которые наглядно показывают насколько далеко можно добраться за определённое время.</p>
+        <p>Мы разработали технологию быстрого расчёта изохрон. Галтон разработан на данных <a href="http://openstreetmap.org">OpenStreetMap</a> и маршрутизации <a href="http://project-osrm.org">OSRM</a>. Его код тоже открыт и <a href='https://github.com/urbica/galton/'>опубликован на GitHub</a>, а детали <a href='https://medium.com/@urbica/%D0%B3%D0%B0%D0%BB%D1%8C%D1%82%D0%BE%D0%BD-c7360acf1ec4'>можно узнать в блоге</a>.</p><p>Мы будем рады обсудить возможности использования Galton в ваших проектах. Пишите <a href='mailto:hello@urbica.co'>hello@urbica.co</a></p>
+    </div>
+   </div>
+   <div id='cities'>
+    <div id='cities-list'></div>
+  </div>
+  </div>
+  </div>
+</div>
+
+<div id='modes'>
+</div>
+
+<div id='legend'>
+  <div class='legend-caption'><span class='lang-ru'>Достижимо&nbsp;за&nbsp;</span><span class='lang-en'>Reachable&nbsp;at&nbsp;</span></div>
+  <div id='m10' class='legend-item'>10</div><div id='m20' class='legend-item'>20</div>
+  <div class='legend-caption'><span class='lang-ru'>&nbsp;минут</span><span class='lang-en'>&nbsp;minutes</span></div>
+</div>
+<script src="resources/app.js"></script>
+
+<!-- Yandex.Metrika counter -->
+<script type="text/javascript">
+(function (d, w, c) {
+    (w[c] = w[c] || []).push(function() {
+        try {
+            w.yaCounter31411338 = new Ya.Metrika({
+                id:31411338,
+                clickmap:true,
+                trackLinks:true,
+                accurateTrackBounce:true
+            });
+        } catch(e) { }
+    });
+
+    var n = d.getElementsByTagName("script")[0],
+        s = d.createElement("script"),
+        f = function () { n.parentNode.insertBefore(s, n); };
+    s.type = "text/javascript";
+    s.async = true;
+    s.src = "https://mc.yandex.ru/metrika/watch.js";
+
+    if (w.opera == "[object Opera]") {
+        d.addEventListener("DOMContentLoaded", f, false);
+    } else { f(); }
+})(document, window, "yandex_metrika_callbacks");
+</script>
+<noscript><div><img src="https://mc.yandex.ru/watch/31411338" style="position:absolute; left:-9999px;" alt="" /></div></noscript>
+<!-- /Yandex.Metrika counter -->
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+  ga('create', 'UA-64821013-1', 'auto');
+  ga('send', 'pageview');
+</script>
+</body>
+</html>
